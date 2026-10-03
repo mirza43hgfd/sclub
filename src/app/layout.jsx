@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'SClub — Movie Trailers',
-  description: 'SClub — latest Hollywood & Bollywood movie trailers, teasers and entertainment.'
+  title: 'SClub — Movies & Trailers',
+  description: 'SClub — latest Hollywood & Bollywood movies, trailers, teasers and entertainment. Watch and download.'
 };
 
 export default function RootLayout({ children }) {

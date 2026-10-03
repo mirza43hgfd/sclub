@@ -57,13 +57,24 @@ export const DEFAULT_SETTINGS = {
   site_name: 'SClub',
   tagline: 'Latest movie trailers, teasers & entertainment',
   logo_emoji: '🎬',
-  primary_color: '#d4a437',
+  primary_color: '#e5484d',
   hero_title: 'Watch. <span>Enjoy.</span> Share.',
-  hero_subtitle: 'The hottest movie trailers and entertainment picks, all in one place. New trailers added regularly — join our Facebook community!',
+  hero_subtitle: 'The hottest movie trailers and entertainment picks, all in one place. New trailers added regularly — join our community!',
   hero_banner_url: '',
   footer_text: 'Made for movie lovers.',
   facebook_url: '',
   instagram_url: '',
+  telegram_url: '',
+  howto_text: `HOW TO DOWNLOAD FROM SCLUB
+
+1. Open the movie page and scroll to the download buttons.
+2. Pick your quality: 480p (small size), 720p (good), or 1080p (best).
+3. Tap the download button — the file will start downloading to your phone.
+4. Google Drive links: tap Download, then choose "Download anyway" if asked.
+
+TROUBLE?
+- Link not working? Use the "Report" button on the movie page and we will fix it.
+- Want a movie we don't have? Send a request on the Request page!`,
   ad_header_code: '',
   ad_infeed_code: '',
   ad_popunder_code: '',

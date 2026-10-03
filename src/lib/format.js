@@ -15,13 +15,20 @@ export function youtubeId(u) {
   return m ? m[1] : null;
 }
 
+/** Direct-download URL for a raw link (Drive share links converted). */
+export function rawDownloadLink(u) {
+  u = (u || '').trim();
+  if (!u) return '';
+  const id = driveId(u);
+  return id ? `https://drive.google.com/uc?export=download&id=${id}` : u;
+}
+
 /** Direct-download URL for a video record (Drive share links converted). */
 export function downloadLink(v) {
   const u = (v.video_url || '').trim();
   if (!u) return '';
   if (v.video_type === 'drive') {
-    const id = driveId(u);
-    return id ? `https://drive.google.com/uc?export=download&id=${id}` : u;
+    return rawDownloadLink(u);
   }
   return u;
 }

@@ -17,6 +17,6 @@ export default function AdminPage() {
     }).catch(() => router.replace('/admin/login'));
   }, [router]);
 
-  if (!ok) return <div className="center">Checking login…</div>;
+  if (!ok) return <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--muted)' }}>Checking login…</div>;
   return <AdminPanel />;
 }

@@ -21,11 +21,12 @@ export async function POST(req) {
     return Response.json({ error: 'title and video_url are required' }, { status: 400 });
   }
   const db = sql();
+  const ql = b.quality_links && typeof b.quality_links === 'object' ? b.quality_links : {};
   const rows = await db`
-    insert into videos (title, category_id, thumbnail_url, video_url, video_type, description, duration, featured, published)
+    insert into videos (title, category_id, thumbnail_url, video_url, video_type, description, duration, featured, published, language, year, quality_links)
     values (${b.title}, ${b.category_id || null}, ${b.thumbnail_url || ''}, ${b.video_url},
             ${b.video_type || 'drive'}, ${b.description || ''}, ${b.duration || ''},
-            ${!!b.featured}, ${b.published !== false})
+            ${!!b.featured}, ${b.published !== false}, ${b.language || ''}, ${b.year || ''}, ${JSON.stringify(ql)})
     returning *`;
   return Response.json({ video: rows[0] }, { status: 201 });
 }

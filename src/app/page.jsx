@@ -8,16 +8,16 @@ export async function generateMetadata() {
   try {
     const s = await getSettings();
     return {
-      title: `${s.site_name} — Movie Trailers`,
+      title: `${s.site_name} — Movies & Trailers`,
       description: s.meta_description,
       openGraph: {
-        title: `${s.site_name} — Movie Trailers`,
+        title: `${s.site_name} — Movies & Trailers`,
         description: s.meta_description,
         type: 'website'
       }
     };
   } catch {
-    return { title: 'SClub — Movie Trailers' };
+    return { title: 'SClub — Movies & Trailers' };
   }
 }
 

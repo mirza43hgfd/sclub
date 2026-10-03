@@ -31,20 +31,20 @@ export default function AdminLoginPage() {
 
   return (
     <div className="wrap">
-      <div className="modal loginbox">
-        <h3>🔐 Admin Login</h3>
-        <p className="sub">Only the site owner can log in here.</p>
-        <form onSubmit={submit}>
+      <div className="loginbox">
+        <h3 style={{ margin: '0 0 4px' }}>🔐 Admin Login</h3>
+        <p style={{ color: 'var(--muted)', fontSize: 13, margin: '0 0 18px' }}>Only the site owner can log in here.</p>
+        <form className="form" onSubmit={submit}>
           <div className="field"><label>Email</label>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
           <div className="field"><label>Password</label>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
-          {err && <div className="note" style={{ borderColor: 'var(--danger)', background: 'rgba(229,72,77,.08)', color: '#ffb4b6' }}>{err}</div>}
-          <div className="mrow">
-            <a className="btn btn-ghost" href="/">← Back to site</a>
-            <button className="btn btn-gold" disabled={busy}>{busy ? 'Logging in…' : 'Login'}</button>
+          {err && <div className="notice">{err}</div>}
+          <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
+            <a className="btn ghost" href="/">← Back</a>
+            <button className="btn" disabled={busy}>{busy ? 'Logging in…' : 'Login'}</button>
           </div>
         </form>
       </div>
