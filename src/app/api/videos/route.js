@@ -3,7 +3,11 @@ import { sql } from '@/lib/db.js';
 import { currentAdmin, unauthorized } from '@/lib/auth.js';
 
 
+
+
 export const dynamic = 'force-dynamic';
+
+
 
 
 export async function GET(req) {
@@ -12,11 +16,16 @@ export async function GET(req) {
   const limit = Math.max(1, Math.min(parseInt(searchParams.get('limit') || '48', 10) || 48, 100));
   const offset = Math.max(0, parseInt(searchParams.get('offset') || '0', 10) || 0);
   const cat = searchParams.get('category') || '';
+  const sq = (searchParams.get('search') || '').trim();
   const isAdmin = currentAdmin() && searchParams.get('all') === '1';
   let rows, total;
   if (isAdmin) {
     rows = await db`select v.*, c.name as category_name, c.color as category_color from videos v left join categories c on c.id = v.category_id order by v.created_at desc limit ${limit} offset ${offset}`;
     total = await db`select count(*)::int as n from videos`;
+  } else if (sq) {
+    const pat = '%' + sq + '%';
+    rows = await db`select v.*, c.name as category_name, c.color as category_color from videos v left join categories c on c.id = v.category_id where v.published = true and (v.title ilike ${pat} or v.description ilike ${pat}) order by v.created_at desc limit ${limit} offset ${offset}`;
+    total = await db`select count(*)::int as n from videos v where v.published = true and (v.title ilike ${pat} or v.description ilike ${pat})`;
   } else if (cat) {
     rows = await db`select v.*, c.name as category_name, c.color as category_color from videos v left join categories c on c.id = v.category_id where v.published = true and c.name = ${cat} order by v.created_at desc limit ${limit} offset ${offset}`;
     total = await db`select count(*)::int as n from videos v left join categories c on c.id = v.category_id where v.published = true and c.name = ${cat}`;
@@ -26,6 +35,8 @@ export async function GET(req) {
   }
   return Response.json({ videos: rows, total: total[0].n, limit, offset });
 }
+
+
 
 
 export async function POST(req) {
