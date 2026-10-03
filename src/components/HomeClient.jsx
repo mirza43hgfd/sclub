@@ -1,3 +1,4 @@
+
 'use client';
 // SClub v2 homepage — movieclub-style: hero search, CTA row, pills, poster grid.
 import { useMemo, useState } from 'react';
@@ -52,8 +53,8 @@ export function PosterCard({ v, logo }) {
 export default function HomeClient({ initial }) {
   const [settings] = useState(initial.settings);
   const [cats] = useState(initial.cats);
-  const [videos] = useState(initial.videos);
-  const [cat, setCat] = useState('All');
+  const [videos, setVideos] = useState(initial.videos);   const [total, setTotal] = useState(initial.total || initial.videos.length);   const [loadingMore, setLoadingMore] = useState(false);
+  const [cat, setCat] = useState('All'); const pickCat = async (c) => { setCat(c); setLoadingMore(true); try { const r = await fetch('/api/videos?limit=48&offset=0' + (c !== 'All' ? '&category=' + encodeURIComponent(c) : '')); const d = await r.json(); setVideos(d.videos || []); setTotal(d.total || 0); } catch {} finally { setLoadingMore(false); } }; const loadMore = async () => { if (loadingMore || videos.length >= total) return; setLoadingMore(true); try { const r = await fetch('/api/videos?limit=48&offset=' + videos.length + (cat !== 'All' ? '&category=' + encodeURIComponent(cat) : '')); const d = await r.json(); setVideos((v) => [...v, ...(d.videos || [])]); } catch {} finally { setLoadingMore(false); } };
   const [q, setQ] = useState('');
 
   const counts = useMemo(() => {
@@ -131,9 +132,9 @@ export default function HomeClient({ initial }) {
         <AdSlot code={settings.ad_header_code} />
 
         <div className="pills">
-          <button className={'pill' + (cat === 'All' ? ' on' : '')} onClick={() => setCat('All')}>ALL ({videos.length})</button>
+          <button className={'pill' + (cat === 'All' ? ' on' : '')} onClick={() => pickCat('All')}>ALL ({videos.length})</button>
           {Object.keys(counts).sort().map((n) => (
-            <button key={n} className={'pill' + (cat === n ? ' on' : '')} onClick={() => setCat(n)}>
+            <button key={n} className={'pill' + (cat === n ? ' on' : '')} onClick={() => pickCat(n)}>
               {n.toUpperCase()} ({counts[n]})
             </button>
           ))}
