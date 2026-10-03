@@ -39,3 +39,13 @@ export async function DELETE(req, { params }) {
   await db`delete from videos where id = ${params.id}`;
   return Response.json({ ok: true });
 }
+
+// Public GET — single published video (for the /go link-wall page)
+export async function GET(req, { params }) {
+  const db = sql();
+  const rows = await db`
+    select id, title, video_url, quality_links
+    from videos where id = ${params.id} and published = true limit 1`;
+  if (!rows.length) return Response.json({ error: 'Not found' }, { status: 404 });
+  return Response.json(rows[0]);
+}
