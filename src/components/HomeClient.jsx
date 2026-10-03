@@ -156,7 +156,7 @@ export default function HomeClient({ initial }) {
           )}
         </div>
 
-        <div className="notice" style={{ marginTop: 34 }}>
+        {videos.length < total && ( <div style={{ textAlign: 'center', margin: '26px 0' }}> <button className="btn" onClick={loadMore} disabled={loadingMore}> {loadingMore ? 'Loading…' : 'Load More (' + (total - videos.length) + ' remaining)'} </button> </div> )} <div className="notice" style={{ marginTop: 34 }}>
           🔔 Found a broken link? Open the movie page and use the Report button — we fix broken links fast.
           Can't find a movie? <Link href="/request" style={{ color: 'var(--red)', fontWeight: 700 }}>Request it here</Link>.
         </div>
