@@ -55,11 +55,11 @@ export function unauthorized() {
 
 export const DEFAULT_SETTINGS = {
   site_name: 'SClub',
-  tagline: 'Latest movie trailers, teasers & entertainment',
+  tagline: 'Latest movies & web series — watch and download',
   logo_emoji: '🎬',
   primary_color: '#e5484d',
   hero_title: 'Watch. <span>Enjoy.</span> Share.',
-  hero_subtitle: 'The hottest movie trailers and entertainment picks, all in one place. New trailers added regularly — join our community!',
+  hero_subtitle: 'The hottest movies and web series, all in one place. New uploads added regularly — join our community!',
   hero_banner_url: '',
   footer_text: 'Made for movie lovers.',
   facebook_url: '',
@@ -78,7 +78,7 @@ TROUBLE?
   ad_header_code: '',
   ad_infeed_code: '',
   ad_popunder_code: '',
-  meta_description: 'SClub — latest Hollywood & Bollywood movie trailers, teasers and entertainment. Watch and download.'
+  meta_description: 'SClub — latest Hollywood & Bollywood movies and web series. Watch and download.'
 };
 
 export async function getSettings() {

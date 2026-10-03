@@ -59,7 +59,7 @@ on conflict (id) do nothing;
 
 -- seed categories
 insert into categories (name, color) values
-  ('Hollywood Trailers', '#e5484d'),
+  ('Hollywood Movies', '#e5484d'),
   ('Bollywood', '#d4a437'),
   ('Lollywood', '#3fb68b'),
   ('Web Series', '#4f8ef7'),
@@ -67,14 +67,14 @@ insert into categories (name, color) values
 on conflict (name) do nothing;
 
 -- seed sample videos (edit/delete from admin panel)
-insert into videos (title, category_id, video_url, video_type, description, duration, featured, published)
+insert into videos (title, category_id, video_url, video_type, description, duration, language, year, featured, published)
 values
-  ('Avengers: Doomsday — Official Trailer (SAMPLE, edit me)',
-   (select id from categories where name = 'Hollywood Trailers'),
-   '', 'youtube', 'Sample entry — open the admin panel, edit it and paste the real trailer link.', '2:31', true, true),
-  ('Dune: Part Three — Official Trailer (SAMPLE, edit me)',
-   (select id from categories where name = 'Hollywood Trailers'),
-   '', 'youtube', 'Sample entry — open the admin panel, edit it and paste the real trailer link.', '', false, true),
-  ('Coming Soon — Teaser (SAMPLE, edit me)',
+  ('Avengers: Doomsday (2026) Hindi Dubbed (SAMPLE, edit me)',
+   (select id from categories where name = 'Hollywood Movies'),
+   '', 'drive', 'Sample entry — open the admin panel, edit it and paste the real movie link.', '2:31', 'Hindi Dubbed', '2026', true, true),
+  ('Dune: Part Three (SAMPLE, edit me)',
+   (select id from categories where name = 'Hollywood Movies'),
+   '', 'drive', 'Sample entry — open the admin panel, edit it and paste the real movie link.', '', 'English', '', false, true),
+  ('Coming Soon — New Release (SAMPLE, edit me)',
    (select id from categories where name = 'Coming Soon'),
-   '', 'youtube', 'Sample entry showing how a teaser looks.', '', false, true);
+   '', 'drive', 'Sample entry showing how a new release looks.', '', '', '', false, true);
