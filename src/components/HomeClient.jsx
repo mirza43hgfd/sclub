@@ -32,7 +32,7 @@ export function PosterCard({ v, logo }) {
         {v.thumbnail_url ? (
           <img src={v.thumbnail_url} loading="lazy" alt="" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
         ) : (
-          <div className="ph">{logo}</div>
+          <div className="ph"><span>{logo}</span><span className="ph-title">{v.title}</span></div>
         )}
         {v.created_at && <span className="date-badge">{dateBadge(v.created_at)}</span>}
         {qtag && <span className="quality-tag">{qtag.toUpperCase()}</span>}

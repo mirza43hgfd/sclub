@@ -11,6 +11,9 @@ export function SiteHeader({ settings, active }) {
           <Link href="/how-to-download" className={active === 'howto' ? 'on' : ''}>How to Download</Link>
           <Link href="/request" className={active === 'req' ? 'on' : ''}>Request Movie</Link>
         </nav>
+        <form className="hdr-search" action="/search">
+          <input name="q" placeholder="Search..." />
+        </form>
       </div>
     </header>
   );

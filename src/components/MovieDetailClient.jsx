@@ -41,6 +41,9 @@ export default function MovieDetailClient({ video, related, settings }) {
             <Link href="/how-to-download">How to Download</Link>
             <Link href="/request">Request Movie</Link>
           </nav>
+          <form className="hdr-search" action="/search">
+            <input name="q" placeholder="Search..." />
+          </form>
         </div>
       </header>
 
