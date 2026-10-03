@@ -57,11 +57,11 @@ export default function HomeClient({ initial }) {
   const [cat, setCat] = useState('All'); const pickCat = async (c) => { setCat(c); setLoadingMore(true); try { const r = await fetch('/api/videos?limit=48&offset=0' + (c !== 'All' ? '&category=' + encodeURIComponent(c) : '')); const d = await r.json(); setVideos(d.videos || []); setTotal(d.total || 0); } catch {} finally { setLoadingMore(false); } }; const loadMore = async () => { if (loadingMore || videos.length >= total) return; setLoadingMore(true); try { const r = await fetch('/api/videos?limit=48&offset=' + videos.length + (cat !== 'All' ? '&category=' + encodeURIComponent(cat) : '')); const d = await r.json(); setVideos((v) => [...v, ...(d.videos || [])]); } catch {} finally { setLoadingMore(false); } };
   const [q, setQ] = useState('');
 
-  const counts = useMemo(() => {
-    const c = {};
-    videos.forEach((v) => { const n = catOf(v); c[n] = (c[n] || 0) + 1; });
-    return c;
-  }, [videos]);
+  const counts = initial.catCounts || {};
+
+
+
+
 
   const filtered = videos.filter((v) => {
     if (cat !== 'All' && catOf(v) !== cat) return false;
@@ -132,7 +132,7 @@ export default function HomeClient({ initial }) {
         <AdSlot code={settings.ad_header_code} />
 
         <div className="pills">
-          <button className={'pill' + (cat === 'All' ? ' on' : '')} onClick={() => pickCat('All')}>ALL ({videos.length})</button>
+          <button className={'pill' + (cat === 'All' ? ' on' : '')} onClick={() => pickCat('All')}>ALL ({total})</button>
           {Object.keys(counts).sort().map((n) => (
             <button key={n} className={'pill' + (cat === n ? ' on' : '')} onClick={() => pickCat(n)}>
               {n.toUpperCase()} ({counts[n]})
