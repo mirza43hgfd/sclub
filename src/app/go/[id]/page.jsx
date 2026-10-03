@@ -27,7 +27,7 @@ export default function GoPage({ params, searchParams }) {
   return (
     <>
       <header className="hdr"><div className="hdr-in">
-        <Link href="/" className="logo">{(settings && settings.logo_emoji) || '🎬'} <b>S</b>CLUB</Link>
+        <Link href="/" className="logo">{(settings && settings.logo_url) ? <img src={settings.logo_url} alt="SClub" className="site-logo" /> : <>{(settings && settings.logo_emoji) || '🎬'} <b>S</b>CLUB</>}</Link>
         <nav className="nav"><Link href="/">Home</Link><Link href="/how-to-download">How to Download</Link></nav>
       </div></header>
       <div className="wrap" style={{ display: 'flex', justifyContent: 'center', paddingTop: 40, paddingBottom: 40 }}>
