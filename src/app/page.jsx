@@ -3,7 +3,11 @@ import { getSettings } from '@/lib/auth.js';
 import HomeClient from '@/components/HomeClient.jsx';
 
 
+
+
 export const dynamic = 'force-dynamic';
+
+
 
 
 export async function generateMetadata() {
@@ -24,6 +28,8 @@ export async function generateMetadata() {
 }
 
 
+
+
 async function getData() {
   const db = sql();
   const settings = await getSettings();
@@ -34,8 +40,12 @@ async function getData() {
     where v.published = true
     order by v.created_at desc limit 48`;
   const tot = await db`select count(*)::int as n from videos where published = true`;
-  return { settings, cats, videos, total: tot[0].n };
+  const cc = await db`select c.name, count(v.id)::int as n from categories c left join videos v on v.category_id = c.id and v.published = true group by c.name`;
+  const catCounts = {}; cc.forEach((r) => { catCounts[r.name] = r.n; });
+  return { settings, cats, videos, total: tot[0].n, catCounts };
 }
+
+
 
 
 export default async function HomePage() {
