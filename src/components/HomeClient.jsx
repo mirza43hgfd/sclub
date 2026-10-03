@@ -1,7 +1,7 @@
 
 'use client';
 // SClub v2 homepage — movieclub-style: hero search, CTA row, pills, poster grid.
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import AdSlot from './AdSlot.jsx';
 
@@ -55,7 +55,8 @@ export default function HomeClient({ initial }) {
   const [cats] = useState(initial.cats);
   const [videos, setVideos] = useState(initial.videos);   const [total, setTotal] = useState(initial.total || initial.videos.length);   const [loadingMore, setLoadingMore] = useState(false);
   const [cat, setCat] = useState('All'); const pickCat = async (c) => { setCat(c); setLoadingMore(true); try { const r = await fetch('/api/videos?limit=48&offset=0' + (c !== 'All' ? '&category=' + encodeURIComponent(c) : '')); const d = await r.json(); setVideos(d.videos || []); setTotal(d.total || 0); } catch {} finally { setLoadingMore(false); } }; const loadMore = async () => { if (loadingMore || videos.length >= total) return; setLoadingMore(true); try { const r = await fetch('/api/videos?limit=48&offset=' + videos.length + (cat !== 'All' ? '&category=' + encodeURIComponent(cat) : '')); const d = await r.json(); setVideos((v) => [...v, ...(d.videos || [])]); } catch {} finally { setLoadingMore(false); } };
-  const [q, setQ] = useState('');
+  const [q, setQ] = useState('');   const searchTimer = useRef(null);   const doSearch = async (term) => {     const t = term.trim();     if (!t) { pickCat(cat); return; }     setLoadingMore(true);     try {       const r = await fetch('/api/videos?search=' + encodeURIComponent(t) + '&limit=48&offset=0');       const d = await r.json(); setVideos(d.videos || []); setTotal(d.total || 0);     } catch {} finally { setLoadingMore(false); }   };   const onSearchType = (val) => {     setQ(val);     if (searchTimer.current) clearTimeout(searchTimer.current);     searchTimer.current = setTimeout(() => doSearch(val), 400);   };
+  
 
   const counts = initial.catCounts || {};
 
@@ -65,7 +66,7 @@ export default function HomeClient({ initial }) {
 
   const filtered = videos.filter((v) => {
     if (cat !== 'All' && catOf(v) !== cat) return false;
-    if (q && !(v.title + ' ' + (v.description || '')).toLowerCase().includes(q.toLowerCase())) return false;
+    
     return true;
   });
 
@@ -108,7 +109,7 @@ export default function HomeClient({ initial }) {
             <Link href="/request">Request Movie</Link>
           </nav>
           <form className="hdr-search" onSubmit={goSearch}>
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search..." />
+            <input value={q} onChange={(e) => onSearchType(e.target.value)} placeholder="Search..." />
           </form>
         </div>
       </header>
@@ -117,7 +118,7 @@ export default function HomeClient({ initial }) {
         <h1 dangerouslySetInnerHTML={{ __html: settings.hero_title }} />
         <p>{settings.hero_subtitle}</p>
         <form className="hero-search" onSubmit={goSearch}>
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search Movies or Web Series here...." />
+          <input value={q} onChange={(e) => onSearchType(e.target.value)} placeholder="Search Movies or Web Series here...." />
           <button type="submit">Search</button>
         </form>
         <div className="cta-row">
