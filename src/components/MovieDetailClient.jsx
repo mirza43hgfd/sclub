@@ -34,7 +34,7 @@ export default function MovieDetailClient({ video, related, settings }) {
     <>
       <header className="hdr">
         <div className="hdr-in">
-          <Link href="/" className="logo">{settings.logo_emoji} <b>S</b>CLUB</Link>
+          <Link href="/" className="logo">{settings.logo_url ? <img src={settings.logo_url} alt="SClub" className="site-logo" /> : <>{settings.logo_emoji} <b>S</b>CLUB</>}</Link>
           <nav className="nav">
             <Link href="/">Home</Link>
             <Link href="/categories">Categories</Link>
