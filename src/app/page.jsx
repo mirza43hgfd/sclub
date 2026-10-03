@@ -2,7 +2,9 @@ import { sql } from '@/lib/db.js';
 import { getSettings } from '@/lib/auth.js';
 import HomeClient from '@/components/HomeClient.jsx';
 
+
 export const dynamic = 'force-dynamic';
+
 
 export async function generateMetadata() {
   try {
@@ -21,6 +23,7 @@ export async function generateMetadata() {
   }
 }
 
+
 async function getData() {
   const db = sql();
   const settings = await getSettings();
@@ -29,9 +32,11 @@ async function getData() {
     select v.*, c.name as category_name, c.color as category_color
     from videos v left join categories c on c.id = v.category_id
     where v.published = true
-    order by v.created_at desc`;
-  return { settings, cats, videos };
+    order by v.created_at desc limit 48`;
+  const tot = await db`select count(*)::int as n from videos where published = true`;
+  return { settings, cats, videos, total: tot[0].n };
 }
+
 
 export default async function HomePage() {
   let data;
