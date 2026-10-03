@@ -89,16 +89,16 @@ export default function MovieDetailClient({ video, related, settings }) {
               <>
                 <div className="secttl" style={{ marginTop: 6 }}><h2>⬇ Download</h2><div className="line" /></div>
                 <div className="dl-btns">
-                  {quals.map(([k, url]) => (
-                    <a key={k} className="btn ghost" href={rawDownloadLink(url)} target="_blank" rel="noopener noreferrer">
+                  {quals.map(([k]) => (
+                    <Link key={k} className="btn ghost" href={`/go/${video.id}?q=${k}`}>
                       ⬇ {k.toUpperCase()}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </>
             ) : mainDl ? (
               <div className="dl-btns">
-                <a className="btn ghost" href={mainDl} target="_blank" rel="noopener noreferrer">⬇ Download</a>
+                <Link className="btn ghost" href={`/go/${video.id}?q=main`}>⬇ Download</Link>
               </div>
             ) : null}
 
